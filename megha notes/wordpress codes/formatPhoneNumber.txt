@@ -1,0 +1,28 @@
+    How to format the Phone number in checkout page ?(without plugin)
+
+Ans:The requirements of my input field are:
+1.numbers only and no letters and other special characters
+2.format the input field with a US number like (123) 457-7890
+
+
+/****************Here is a code**************/
+add_filter( 'woocommerce_checkout_fields' , 'phone_number' );
+function phone_number( $fields ) {
+     $fields['billing']['billing_phone'] = array(
+        'label'     => __('phone_number', 'woocommerce'),
+        'required'  => true,
+		'maxlength'=>10,
+		'class'     => array('form-row-wide'),
+        'clear'     => true
+     );
+     return $fields;
+}
+
+//formatting of phone number
+add_action('wp_footer', 'jg_format_checkout_billing_phone');
+function jg_format_checkout_billing_phone() {
+    if ( is_checkout() && ! is_wc_endpoint_url() ) :
+    ?>
+    <script type="text/javascript">
+    jQuery( function($){
+        $('

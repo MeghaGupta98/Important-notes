@@ -1,0 +1,64 @@
+                  
+                    How to import and export CSV Files in wordpress without using plugin?
+1.in wordpress->wp-content->plugins ->make a folder (like:myplugin)
+2.then create one folder inside name it 
+   img
+//paste logo for ur plugin
+3.then make two files 
+a)customplugin.php  //***********you can give your own file name***********//
+b)display.php
+
+
+//******************add below code in functions.php**********************//
+
+add_action('wp_ajax_download_csv', 'download_csv');
+	if (isset($_POST['download_csv'])) {
+  $sql = "SELECT * from wp_customplugin ORDER BY id DESC";
+  $rows = $wpdb->get_results($sql, 'ARRAY_A');
+  // var_dump($rows);
+  if ($rows) {
+    $csv_fields = array();
+    $csv_fields['id'] = 'id';
+    $csv_fields['product_name'] = 'product_name';
+    $csv_fields['retail_price'] = 'retail_price';
+    $csv_fields['modal'] = 'modal';
+    $csv_fields['size'] = 'size';
+  }
+  // var_dump($csv_fields);
+  $output_filename = 'file_name' .'.csv';
+
+$output_handle = @fopen('php://output', 'w');
+// var_dump($output_handle );
+
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Content-Description: File Transfer');
+header('Content-type: text/csv');
+header('Content-Disposition: attachment; filename=' .$output_filename);
+header('Expires: 0');
+header('Pragma: public'); 
+
+$first = true;
+// Parse results to csv format
+foreach ($rows as $row) {
+
+// Add table headers
+    if ($first) {
+
+       $titles = array();
+
+        foreach ($row as $key => $val) {
+
+            $titles[] = $key;
+
+        }
+        fputcsv($output_handle, $titles);
+        $first = false;
+    }
+    $leadArray = (array) $row; // Cast the Object to an array
+    // Add row to file
+    fputcsv($output_handle, $leadArray);
+}
+fclose($output_handle);
+
+die();
+}

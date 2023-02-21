@@ -1,0 +1,65 @@
+                       
+                           How to add input fileds in checkout page?
+
+1. Write code in (functions.php) file of your current theme
+
+     Here’s a full list of fields:
+    
+1. Billing:
+billing_first_name
+billing_last_name
+billing_company
+billing_address_1
+billing_address_2
+billing_city
+billing_postcode
+billing_country
+billing_state
+billing_email
+billing_phone
+
+2.Shipping
+shipping_first_name
+shipping_last_name
+shipping_company
+shipping_address_1
+shipping_address_2
+shipping_city
+shipping_postcode
+shipping_country
+shipping_state
+
+3.Account
+account_username
+account_password
+account_password-2
+
+4.Order
+order_comments
+
+**.  //input field for phone number //.**
+
+add_filter( 'woocommerce_checkout_fields' , 'phone_number' );
+function phone_number( $fields ) {
+     $fields['billing']['billing_phone'] = array(
+        'label'     => __('phone_number', 'woocommerce'),
+        'required'  => true,
+        'maxlength'=>10,
+        'class'     => array('form-row-wide'),
+        'clear'     => true
+     );
+     return $fields;
+}
+
+**.  //input field for email //.**
+
+add_filter( 'woocommerce_checkout_fields' , 'email' );
+function email( $fields ) {
+     $fields['billing']['billing_email'] = array(
+        'label'     => __('Email', 'woocommerce'),
+        'required'  => true,
+        'class'     => array('form-row-wide'),
+        'clear'     => true
+     );
+     return $fields;
+}

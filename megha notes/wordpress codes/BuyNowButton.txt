@@ -1,0 +1,31 @@
+                       
+                           How to add Buy Now Button in Woocommerce?(without Plugin)
+
+1. Write code in (functions.php) file of your current theme
+
+1.     // add Buy Now button after price//
+
+add_action('woocommerce_after_shop_loop_item_title', 'buynow');
+function buynow()
+{
+	$product_id = get_the_ID();
+	$product = wc_get_product($product_id);
+	$checkout_url = wc_get_checkout_url();
+	if ( $product->is_type('simple')||$product->is_type('variable') ){
+		echo '<a href="'.$checkout_url.'?shop_loop_item_title ='.$product_id.'" class="buy">BUY NOW</a>';
+	}
+}
+
+
+2.     // add Buy Now button after add_to_cart_button//
+
+add_action('woocommerce_after_add_to_cart_button, 'buynow');
+function buynow()
+{
+	$product_id = get_the_ID();
+	$product = wc_get_product($product_id);
+	$checkout_url = wc_get_checkout_url();
+	if ( $product->is_type('simple')||$product->is_type('variable') ){
+		echo '<a href="'.$checkout_url.'?add_to_cart_button='.$product_id.'" class="buy">BUY NOW</a>';
+	}
+}

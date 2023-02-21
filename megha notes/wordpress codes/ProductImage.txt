@@ -1,0 +1,12 @@
+    How to show Product image at checkoiut page in woocommerce(without plugin)?
+
+// ***********Product Images @ Woo Checkout***************//
+
+add_filter( 'woocommerce_cart_item_name', 'wpamit_product_image_at_checkout', 9999, 3 );
+  
+function wpamit_product_image_at_checkout( $name, $cart_item, $cart_item_key ) {
+    if ( ! is_checkout() ) return $name;
+    $product = $cart_item['data'];
+    $thumbnail = $product->get_image( array( '100', '100' ), array( 'class' => 'alignleft' ) );
+    return $thumbnail . $name;
+}

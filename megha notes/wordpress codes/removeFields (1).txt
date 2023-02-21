@@ -1,0 +1,43 @@
+    How to remove fields in checkout page in woocommerce(without plugin)?
+
+
+//********* on billing page ****************//
+
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+
+// Our hooked in function - $fields is passed via the filter!
+function custom_override_checkout_fields( $fields ) {
+     unset($fields['billing']['billing_email']);//delete fields acc to your requirements..
+                                                      billing_first_name
+                                                      billing_last_name
+                                                      billing_company
+                                                      billing_address_1
+                                                      billing_address_2
+                                                      billing_city
+                                                      billing_postcode
+                                                      billing_country
+                                                      billing_state
+                                                      billing_email
+                                                      billing_phone
+     return $fields;
+}
+
+
+//********* on shipping page ****************//
+
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+
+// Our hooked in function - $fields is passed via the filter!
+function custom_override_checkout_fields( $fields ) {
+     unset($fields['shipping']['shipping_email']);//delete fields acc to your requirements..
+                                                      shipping_first_name
+                                                      shipping_last_name
+                                                      shipping_company
+                                                      shipping_address_1
+                                                      shipping_address_2
+                                                      shipping_city
+                                                      shipping_postcode
+                                                      shipping_country
+                                                      shipping_state
+     return $fields;
+}
